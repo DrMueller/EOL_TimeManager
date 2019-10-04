@@ -6,10 +6,10 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
 {
     public class CommandContainer : IViewModelCommandContainer<EditDayViewModel>
     {
-        private readonly IDailyReportRepository _dailyReportRepository;
+        private readonly IProjectRepository _dailyReportRepository;
         private EditDayViewModel _context;
 
-        public CommandContainer(IDailyReportRepository dailyReportRepository)
+        public CommandContainer(IProjectRepository dailyReportRepository)
         {
             _dailyReportRepository = dailyReportRepository;
         }
