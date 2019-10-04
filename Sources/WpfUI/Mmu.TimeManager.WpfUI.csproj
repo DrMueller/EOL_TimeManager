@@ -13,12 +13,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataAccess\Mmu.TimeManager.DataAccess.csproj" />
     <ProjectReference Include="..\Domain\Mmu.TimeManager.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\ViewServices\Implementation\" />
     <Folder Include="Infrastructure\Assets\" />
-    <Folder Include="Infrastructure\DependencyInjection\" />
   </ItemGroup>
 
   <ItemGroup>

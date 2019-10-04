@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Mmu.Mlh.DataAccess.FileSystem" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Domain\Mmu.TimeManager.Domain.csproj" />
   </ItemGroup>
 

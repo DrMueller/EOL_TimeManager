@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.ViewModelCommands;
 
-namespace Mmu.TimeManager.WpfUI.Areas.Views.Overview
+namespace Mmu.TimeManager.WpfUI.Areas.Views.DaysOverview
 {
     public class CommandContainer : IViewModelCommandContainer<DaysOverviewViewModel>
     {

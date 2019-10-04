@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="Mmu.TimeManager.WpfUI.Areas.Views.EditDay.EditDayView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Content="Current Date" />
+            <StackPanel  Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+                <!--<commandbuttons:CommandButton Width="80" Height="30" Content="Export" />-->
+                <Button Width="80" Height="30" Content="Export" />
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBox Text="Begin time" />
+            <TextBox Text="End time" />
+            <ComboBox Width="80" SelectedItem="{Binding SelectedProject, Mode=TwoWay}" ItemsSource="{Binding Projects, Mode=OneWay}" Height="30" />
+        </StackPanel>
+
+        <TextBox Grid.Row="2" MinHeight="150" AcceptsReturn="True" TextWrapping="Wrap" />
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Content="Reported time" />
+            <StackPanel  Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button Width="80" Height="30" Content="Cancel" />
+                <Button Width="80" Height="30" Content="Save" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="4">
+            <DataGrid
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                CanUserDeleteRows="False"
+                Height="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UIElement}}"
+                IsReadOnly="false"
+                VerticalScrollBarVisibility="Visible">
+            </DataGrid>
+        </Grid>
+    </Grid>
+</UserControl>

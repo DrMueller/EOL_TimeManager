@@ -2,14 +2,14 @@
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Behaviors;
 
-namespace Mmu.TimeManager.WpfUI.Areas.Views.Overview
+namespace Mmu.TimeManager.WpfUI.Areas.Views.DaysOverview
 {
     public class DaysOverviewViewModel : ViewModelBase, IInitializableViewModel, IDisplayableViewModel, INavigatableViewModel
     {
         private readonly CommandContainer _commandContainer;
         public string HeadingDescription { get; } = "Overview";
         public string NavigationDescription { get; } = "Overview";
-        public int NavigationSequence => 0;
+        public int NavigationSequence { get; } = 1;
 
         public DaysOverviewViewModel(CommandContainer commandContainer)
         {
