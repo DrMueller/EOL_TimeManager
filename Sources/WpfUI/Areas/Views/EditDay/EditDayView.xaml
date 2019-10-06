@@ -20,7 +20,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="0" Content="Current Date" />
+            <Label Grid.Column="0" Content="{Binding DayDateDescription, Mode=OneWay}" />
             <StackPanel  Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
                 <!--<commandbuttons:CommandButton Width="80" Height="30" Content="Export" />-->
                 <Button Width="80" Height="30" Content="Export" />

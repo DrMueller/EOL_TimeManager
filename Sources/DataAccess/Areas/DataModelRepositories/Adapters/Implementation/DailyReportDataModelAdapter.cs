@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using AutoMapper;
 using Mmu.Mlh.DataAccess.Areas.DataModeling.Services.Implementation;
 using Mmu.TimeManager.DataAccess.Areas.DataModels;
@@ -14,7 +14,7 @@ namespace Mmu.TimeManager.DataAccess.Areas.DataModelRepositories.Adapters.Implem
 
         public override DailyReport Adapt(DailyReportDataModel dataModel)
         {
-            throw new NotImplementedException();
+            return new DailyReport(dataModel.Date, new List<ReportEntry>(), dataModel.Id);
         }
     }
 }

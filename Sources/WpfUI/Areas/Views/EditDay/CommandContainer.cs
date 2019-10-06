@@ -1,17 +1,18 @@
 ﻿using System.Threading.Tasks;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.ViewModelCommands;
 using Mmu.TimeManager.Domain.Areas.Repositories;
+using Mmu.TimeManager.WpfUI.Areas.ViewServices;
 
 namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
 {
     public class CommandContainer : IViewModelCommandContainer<EditDayViewModel>
     {
-        private readonly IProjectRepository _dailyReportRepository;
+        private readonly IDayEditViewService _dataService;
         private EditDayViewModel _context;
 
-        public CommandContainer(IProjectRepository dailyReportRepository)
+        public CommandContainer(IDayEditViewService dataService)
         {
-            _dailyReportRepository = dailyReportRepository;
+            _dataService = dataService;
         }
 
         public async Task InitializeAsync(EditDayViewModel context)
@@ -22,7 +23,6 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
             //    SaveIndividual,
             //    Cancel);
 
-            var tra = await _dailyReportRepository.LoadAllAsync();
         }
     }
 }

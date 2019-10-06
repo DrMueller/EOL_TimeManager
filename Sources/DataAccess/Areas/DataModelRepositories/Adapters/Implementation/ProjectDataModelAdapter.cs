@@ -13,7 +13,7 @@ namespace Mmu.TimeManager.DataAccess.Areas.DataModelRepositories.Adapters.Implem
 
         public override Project Adapt(ProjectDataModel dataModel)
         {
-            throw new System.NotImplementedException();
+            return new Project(dataModel.Description, dataModel.Id);
         }
     }
 }
