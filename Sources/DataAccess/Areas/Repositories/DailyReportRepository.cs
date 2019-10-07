@@ -1,6 +1,7 @@
 ﻿using Mmu.Mlh.DataAccess.Areas.DatabaseAccess;
 using Mmu.Mlh.DataAccess.Areas.DataModeling.Services;
 using Mmu.Mlh.DataAccess.Areas.Repositories;
+using Mmu.Mlh.LanguageExtensions.Areas.Types.Maybes;
 using Mmu.TimeManager.DataAccess.Areas.DataModels;
 using Mmu.TimeManager.Domain.Areas.Models;
 using Mmu.TimeManager.Domain.Areas.Repositories;
@@ -22,9 +23,14 @@ namespace Mmu.TimeManager.DataAccess.Areas.Repositories
             _dataModelAdapter = dataModelAdapter;
         }
 
-        public async Task<DailyReport> LoadByDateAsync(DateTime date)
+        public async Task<Maybe<DailyReport>> LoadByDateAsync(DateTime date)
         {
-            var dataModel = await _dataModelRepository.LoadSingleAsync(f => f.Date == date);
+            var dataModel = await _dataModelRepository.LoadSingleAsync(f => f.Date.Date == date.Date);
+            if (dataModel == null)
+            {
+                return Maybe.CreateNone<DailyReport>();
+            }
+
             var result = _dataModelAdapter.Adapt(dataModel);
             return result;
         }

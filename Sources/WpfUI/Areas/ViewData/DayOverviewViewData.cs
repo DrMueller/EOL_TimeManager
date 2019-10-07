@@ -1,15 +1,26 @@
-﻿namespace Mmu.TimeManager.WpfUI.Areas.ViewData
+﻿using System;
+using Mmu.Mlh.LanguageExtensions.Areas.Invariance;
+
+namespace Mmu.TimeManager.WpfUI.Areas.ViewData
 {
     public class DayOverviewViewData
     {
-        public string DateDescription { get; }
-
+        public string DailyReportId { get; }
+        public DateTime Date { get; }
+        public string DateDescription => Date.ToShortDateString();
         public string ReportedTimeDescription { get; }
 
-        public DayOverviewViewData(string dateDescription, string reportedTimeDescription)
+        public DayOverviewViewData(
+            DateTime date,
+            string reportedTimeDescription,
+            string dailyReportId)
         {
-            DateDescription = dateDescription;
+            Guard.StringNotNullOrEmpty(() => reportedTimeDescription);
+            Guard.StringNotNullOrEmpty(() => dailyReportId);
+
+            Date = date;
             ReportedTimeDescription = reportedTimeDescription;
+            DailyReportId = dailyReportId;
         }
     }
 }

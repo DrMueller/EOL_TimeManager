@@ -22,18 +22,17 @@
 
             <Label Grid.Column="0" Content="{Binding DayDateDescription, Mode=OneWay}" />
             <StackPanel  Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
-                <!--<commandbuttons:CommandButton Width="80" Height="30" Content="Export" />-->
                 <Button Width="80" Height="30" Content="Export" />
             </StackPanel>
         </Grid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <TextBox Text="Begin time" />
-            <TextBox Text="End time" />
-            <ComboBox Width="80" SelectedItem="{Binding SelectedProject, Mode=TwoWay}" ItemsSource="{Binding Projects, Mode=OneWay}" Height="30" />
+            <TextBox Width="80" Margin="0,0,10,0" Text="{Binding SelectedReportEntry.From, Mode=TwoWay}" />
+            <TextBox Width="80" Margin="0,0,10,0" Text="{Binding SelectedReportEntry.To, Mode=TwoWay}" />
+            <!--<ComboBox Width="80" SelectedItem="{Binding SelectedProject, Mode=TwoWay}" ItemsSource="{Binding Projects, Mode=OneWay}" Height="30" />-->
         </StackPanel>
 
-        <TextBox Grid.Row="2" MinHeight="150" AcceptsReturn="True" TextWrapping="Wrap" />
+        <TextBox Grid.Row="2" MinHeight="150" AcceptsReturn="True" Text="{Binding SelectedReportEntry.WorkDescription, Mode=TwoWay}" TextWrapping="Wrap" />
 
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
@@ -41,21 +40,49 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="0" Content="Reported time" />
+            <Label Grid.Column="0" Content="{Binding ReportedTimeDescription, Mode=OneWay}" />
             <StackPanel  Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button Width="80" Height="30" Content="Cancel" />
-                <Button Width="80" Height="30" Content="Save" />
+                <Button Width="80" Height="30" Content="Cancel" Command="{Binding Cancel, Mode=OneWay}" />
+                <Button Width="80" Height="30" Content="Save" Command="{Binding Save, Mode=OneWay}" />
             </StackPanel>
         </Grid>
 
         <Grid Grid.Row="4">
             <DataGrid
+                ItemsSource="{Binding ReportEntries, Mode=OneWay}"
                 AutoGenerateColumns="False"
                 CanUserAddRows="False"
                 CanUserDeleteRows="False"
                 Height="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UIElement}}"
                 IsReadOnly="false"
                 VerticalScrollBarVisibility="Visible">
+                <DataGrid.Columns>
+                        <DataGridTextColumn
+                            Binding="{Binding From, Mode=OneWay}"
+                            Header="From"
+                            IsReadOnly="true"
+                            Width="Auto" />
+                        <DataGridTextColumn
+                            Binding="{Binding To, Mode=OneWay}"
+                            Header="To"
+                            IsReadOnly="true"
+                            Width="*" />
+                    <DataGridTextColumn
+                            Binding="{Binding WorkDescription, Mode=OneWay}"
+                            Header="Work"
+                            IsReadOnly="true"
+                            Width="*" />
+                    <DataGridTemplateColumn Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                    Width="40"
+                                    Command="{Binding DataContext.DeleteEntry, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"
+                                    CommandParameter="{Binding .}" >X</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
             </DataGrid>
         </Grid>
     </Grid>
