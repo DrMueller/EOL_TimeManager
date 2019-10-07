@@ -22,6 +22,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
         public DailyReport DailyReport { get; private set; }
         public string DayDateDescription => DailyReport.Date.ToShortDateString();
         public ICommand DeleteEntry => _commandContainer.DeleteEntry;
+        public ICommand EditEntry => _commandContainer.EditEntry;
         public string HeadingDescription { get; } = "Edit day";
         public string NavigationDescription { get; } = "Edit day";
         public int NavigationSequence { get; } = 0;
@@ -32,12 +33,10 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
         {
             get
             {
-                return DailyReport.ReportEntries.Select(re => new ReportEntryViewData
+                return DailyReport.ReportEntries.Select(re => new ReportEntryViewData(re.Id)
                 {
-                    From = re.BeginTime.Description,
-                    ProjectId = "",
-                    ReportEntryId = re.Id,
-                    To = re.EndTime.Evaluate(to => to.Description, () => string.Empty),
+                    BeginTime = re.BeginTime.Description,
+                    EndTime = re.EndTime.Evaluate(to => to.Description, () => string.Empty),
                     WorkDescription = re.WorkDescription
                 }).ToList();
             }
@@ -64,7 +63,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
             IDailyReportRepository dailyReportRepository,
             CommandContainer commandContainer)
         {
-            SelectedReportEntry = new ReportEntryViewData();
+            SelectedReportEntry = new ReportEntryViewData(string.Empty);
             _dailyReportFactory = dailyReportFactory;
             _dailyReportRepository = dailyReportRepository;
             _commandContainer = commandContainer;
@@ -87,7 +86,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
 
         internal void RefreshData()
         {
-            SelectedReportEntry = new ReportEntryViewData();
+            SelectedReportEntry = new ReportEntryViewData(string.Empty);
             RebindReportEntries();
         }
     }

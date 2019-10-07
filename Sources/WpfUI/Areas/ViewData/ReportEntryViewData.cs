@@ -1,29 +1,65 @@
-﻿using System;
+﻿using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels;
 
 namespace Mmu.TimeManager.WpfUI.Areas.ViewData
 {
-    public class ReportEntryViewData
+    public class ReportEntryViewData : ViewModelBase
     {
-        public string From { get; set; }
+        private string _beginTime;
+        private string _endTime;
+        private string _workDescription;
+
+        public string BeginTime
+        {
+            get => _beginTime;
+            set
+            {
+                if (_beginTime != value)
+                {
+                    _beginTime = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string EndTime
+        {
+            get => _endTime;
+            set
+            {
+                if (_endTime != value)
+                {
+                    _endTime = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool IsValid
         {
             get
             {
-                return true;
-                //return !string.IsNullOrEmpty(WorkDescription) && !string.IsNullOrEmpty(ProjectId);
-                //return !string.IsNullOrEmpty(WorkDescription);
+                return !string.IsNullOrEmpty(WorkDescription);
             }
         }
 
-        public ReportEntryViewData()
-        {
+        public string ReportEntryId { get; }
 
+        public string WorkDescription
+        {
+            get => _workDescription;
+            set
+            {
+                if (_workDescription != value)
+                {
+                    _workDescription = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
-        public string ProjectId { get; set; }
-        public string ReportEntryId { get; set; }
-        public string To { get; set; }
-        public string WorkDescription { get; set; }
+        public ReportEntryViewData(string reportEntryId)
+        {
+            ReportEntryId = reportEntryId;
+        }
     }
 }

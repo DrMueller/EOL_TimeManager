@@ -1,8 +1,8 @@
-﻿using Mmu.Mlh.DomainExtensions.Areas.Repositories;
+﻿using System;
+using System.Threading.Tasks;
+using Mmu.Mlh.DomainExtensions.Areas.Repositories;
 using Mmu.Mlh.LanguageExtensions.Areas.Types.Maybes;
 using Mmu.TimeManager.Domain.Areas.Models;
-using System;
-using System.Threading.Tasks;
 
 namespace Mmu.TimeManager.Domain.Areas.Repositories
 {

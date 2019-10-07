@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using AutoMapper;
 using Mmu.Mlh.DataAccess.Areas.DataModeling.Services.Implementation;
+using Mmu.Mlh.LanguageExtensions.Areas.Types.Maybes;
 using Mmu.TimeManager.DataAccess.Areas.DataModels;
 using Mmu.TimeManager.Domain.Areas.Factories;
 using Mmu.TimeManager.Domain.Areas.Models;
@@ -35,9 +36,19 @@ namespace Mmu.TimeManager.DataAccess.Areas.DataModelRepositories.Adapters.Implem
 
         private ReportEntry AdaptReportEntry(ReportEntryDataModel dataModel)
         {
-            var from = new TimeStamp(dataModel.BeginTime.Hour, dataModel.BeginTime.Minute);
-            var to = new TimeStamp(dataModel.EndTime.Hour, dataModel.EndTime.Minute);
-            var result = _reportEntryFactory.Create(from, to, dataModel.WorkDescription, dataModel.Id);
+            var beginTime = new TimeStamp(dataModel.BeginTime.Hour, dataModel.BeginTime.Minute);
+            Maybe<TimeStamp> endTime;
+
+            if (string.IsNullOrEmpty(dataModel.EndTime.Hour))
+            {
+                endTime = Maybe.CreateNone<TimeStamp>();
+            }
+            else
+            {
+                endTime = new TimeStamp(dataModel.EndTime.Hour, dataModel.EndTime.Minute);
+            }
+
+            var result = _reportEntryFactory.Create(beginTime, endTime, dataModel.WorkDescription, dataModel.Id);
             return result;
         }
     }

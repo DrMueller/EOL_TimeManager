@@ -31,8 +31,6 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.DaysOverview
             }
         }
 
-        public DayOverviewViewData SelectedOverviewEntry { get; set; }
-
         public DaysOverviewViewModel(
             IDayOverviewViewService dayOverviewViewService,
             CommandContainer commandContainer)

@@ -9,8 +9,8 @@ namespace Mmu.TimeManager.WpfUI
         protected override async void OnStartup(StartupEventArgs e)
         {
             var assembly = typeof(App).Assembly;
-            var appConfig = WpfAppConfig.CreateWithDefaultIcon(assembly, "Time Manager");
-            await AppStartService.StartAppAsync(appConfig);
+            var windowConfig = WindowConfiguration.CreateWithDefaultIcon(assembly, "Time Manager", 600, 600);
+            await AppStartService.StartAppAsync(new WpfAppConfiguration(assembly, windowConfig));
         }
     }
 }

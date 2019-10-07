@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
+using Mmu.Mlh.LanguageExtensions.Areas.DeepCopying;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.Commands;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.ViewModelCommands;
 using Mmu.TimeManager.Domain.Areas.Factories;
@@ -14,6 +15,18 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
         private readonly IDailyReportRepository _dailyReportRepository;
         private readonly IReportEntryFactory _reportEntryFactory;
         private EditDayViewModel _context;
+
+        public ICommand EditEntry
+        {
+            get
+            {
+                return new ParametredRelayCommand((object obj) =>
+                {
+                    var reportEntry = (ReportEntryViewData)obj;
+                    _context.SelectedReportEntry = reportEntry.DeepCopy();
+                });
+            }
+        }
 
         public ICommand Cancel
         {
@@ -48,8 +61,8 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
                 {
                     var entry = _context.SelectedReportEntry;
                     var reportEntry = _reportEntryFactory.Create(
-                        TimeStamp.Parse(entry.From),
-                        TimeStamp.TryParsing(entry.To),
+                        TimeStamp.Parse(entry.BeginTime),
+                        TimeStamp.TryParsing(entry.EndTime),
                         entry.WorkDescription,
                         entry.ReportEntryId);
 

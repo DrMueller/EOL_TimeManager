@@ -21,18 +21,17 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0" Content="{Binding DayDateDescription, Mode=OneWay}" />
-            <StackPanel  Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+            <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button Width="80" Height="30" Content="Export" />
             </StackPanel>
         </Grid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <TextBox Width="80" Margin="0,0,10,0" Text="{Binding SelectedReportEntry.From, Mode=TwoWay}" />
-            <TextBox Width="80" Margin="0,0,10,0" Text="{Binding SelectedReportEntry.To, Mode=TwoWay}" />
-            <!--<ComboBox Width="80" SelectedItem="{Binding SelectedProject, Mode=TwoWay}" ItemsSource="{Binding Projects, Mode=OneWay}" Height="30" />-->
+            <TextBox Width="80" Margin="0,0,10,0" Text="{Binding SelectedReportEntry.BeginTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Width="80" Margin="0,0,10,0" Text="{Binding SelectedReportEntry.EndTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
 
-        <TextBox Grid.Row="2" MinHeight="150" AcceptsReturn="True" Text="{Binding SelectedReportEntry.WorkDescription, Mode=TwoWay}" TextWrapping="Wrap" />
+        <TextBox Grid.Row="2" MinHeight="75" AcceptsReturn="True" Text="{Binding SelectedReportEntry.WorkDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" />
 
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
@@ -41,7 +40,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0" Content="{Binding ReportedTimeDescription, Mode=OneWay}" />
-            <StackPanel  Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+            <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button Width="80" Height="30" Content="Cancel" Command="{Binding Cancel, Mode=OneWay}" />
                 <Button Width="80" Height="30" Content="Save" Command="{Binding Save, Mode=OneWay}" />
             </StackPanel>
@@ -58,12 +57,12 @@
                 VerticalScrollBarVisibility="Visible">
                 <DataGrid.Columns>
                         <DataGridTextColumn
-                            Binding="{Binding From, Mode=OneWay}"
+                            Binding="{Binding BeginTime, Mode=OneWay}"
                             Header="From"
                             IsReadOnly="true"
                             Width="Auto" />
                         <DataGridTextColumn
-                            Binding="{Binding To, Mode=OneWay}"
+                            Binding="{Binding EndTime, Mode=OneWay}"
                             Header="To"
                             IsReadOnly="true"
                             Width="*" />
@@ -72,6 +71,16 @@
                             Header="Work"
                             IsReadOnly="true"
                             Width="*" />
+                    <DataGridTemplateColumn Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                    Width="40"
+                                    Command="{Binding DataContext.EditEntry, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"
+                                    CommandParameter="{Binding .}" >Edit</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

@@ -18,8 +18,8 @@ namespace Mmu.TimeManager.DataAccess.Areas.DataModelRepositories.Adapters.Implem
                 .ForMember(d => d.Minute, c => c.MapFrom(f => f.Reduce(() => null).Minute));
 
             CreateMap<None<TimeStamp>, TimeStampDataModel>()
-                .ForMember(d => d.Hour, c => c.UseValue(""))
-                .ForMember(d => d.Minute, c => c.UseValue(""));
+                .ForMember(d => d.Hour, c => c.MapFrom(f => string.Empty))
+                .ForMember(d => d.Minute, c => c.MapFrom(f => string.Empty));
         }
     }
 }
