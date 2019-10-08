@@ -1,6 +1,8 @@
-﻿namespace Mmu.TimeManager.WpfUI.Areas.ViewData
+﻿using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels;
+
+namespace Mmu.TimeManager.WpfUI.Areas.ViewData
 {
-    public class ReportEntryViewData
+    public class ReportEntryViewData : ViewModelBase
     {
         private string _beginTime;
         private string _endTime;
@@ -14,6 +16,7 @@
                 if (_beginTime != value)
                 {
                     _beginTime = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -26,6 +29,7 @@
                 if (_endTime != value)
                 {
                     _endTime = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -48,6 +52,7 @@
                 if (_workDescription != value)
                 {
                     _workDescription = value;
+                    OnPropertyChanged();
                 }
             }
         }
