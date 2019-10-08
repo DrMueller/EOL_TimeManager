@@ -31,7 +31,7 @@ namespace Mmu.TimeManager.Domain.Areas.Models
             foreach (var rep in reportedTimeSpans)
             {
                 result += rep;
-            };
+            }
 
             return result;
         }
@@ -45,8 +45,18 @@ namespace Mmu.TimeManager.Domain.Areas.Models
             }
         }
 
-        public void UpsertReportEntry(ReportEntry entry)
+        public UpdateReportEntryResult UpsertReportEntry(ReportEntry entry)
         {
+            var overlapping = _reportEntries.Where(f => f.HasTimesSet)
+                .Any(f => f.Id != entry.Id &&
+                (entry.BeginTime.ToTimeSpan() < f.EndTime.Reduce(() => null).ToTimeSpan()) &&
+                (entry.EndTime.Reduce(() => null).ToTimeSpan() > f.BeginTime.ToTimeSpan()));
+
+            if (overlapping)
+            {
+                return new UpdateReportEntryResult(false, "Report contains overlapping entries.");
+            }
+
             var existingEntry = _reportEntries.SingleOrDefault(e => e == entry);
             if (existingEntry != null)
             {
@@ -56,6 +66,8 @@ namespace Mmu.TimeManager.Domain.Areas.Models
             {
                 _reportEntries.Add(entry);
             }
+
+            return new UpdateReportEntryResult(true, string.Empty);
         }
     }
 }

@@ -11,7 +11,6 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.DaysOverview
     public class CommandContainer : IViewModelCommandContainer<DaysOverviewViewModel>
     {
         private readonly IViewModelDisplayService _displayService;
-        private DaysOverviewViewModel _context;
 
         public ICommand EditDay
         {
@@ -32,7 +31,6 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.DaysOverview
 
         public Task InitializeAsync(DaysOverviewViewModel context)
         {
-            _context = context;
             return Task.CompletedTask;
         }
     }

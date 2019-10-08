@@ -1,4 +1,5 @@
-﻿using StructureMap;
+﻿using System.IO.Abstractions;
+using StructureMap;
 
 namespace Mmu.TimeManager.WpfUI.Infrastructure.DependencyInjection
 {
@@ -11,6 +12,8 @@ namespace Mmu.TimeManager.WpfUI.Infrastructure.DependencyInjection
                 scanner.AssemblyContainingType<WpfUiRegistry>();
                 scanner.WithDefaultConventions();
             });
+
+            For<IFileSystem>().Use<FileSystem>().Singleton();
         }
     }
 }

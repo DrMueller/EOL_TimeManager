@@ -22,13 +22,14 @@
 
             <Label Grid.Column="0" Content="{Binding DayDateDescription, Mode=OneWay}" />
             <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button Width="80" Height="30" Content="Export" />
+                <Button Width="80" Height="30" Content="Export" Command="{Binding ExportToSap, Mode=OneWay}" />
             </StackPanel>
         </Grid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <TextBox Width="80" Margin="0,0,10,0" Text="{Binding SelectedReportEntry.BeginTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox Width="80" Margin="0,0,10,0" Text="{Binding SelectedReportEntry.EndTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Content="{Binding SelectedReportEntry.ReportEntryId, Mode=OneWay}" />
         </StackPanel>
 
         <TextBox Grid.Row="2" MinHeight="75" AcceptsReturn="True" Text="{Binding SelectedReportEntry.WorkDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" />
@@ -65,7 +66,7 @@
                             Binding="{Binding EndTime, Mode=OneWay}"
                             Header="To"
                             IsReadOnly="true"
-                            Width="*" />
+                            Width="Auto" />
                     <DataGridTextColumn
                             Binding="{Binding WorkDescription, Mode=OneWay}"
                             Header="Work"
@@ -75,17 +76,15 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button
-                                    Width="40"
                                     Command="{Binding DataContext.EditEntry, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"
                                     CommandParameter="{Binding .}" >Edit</Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button
-                                    Width="40"
                                     Command="{Binding DataContext.DeleteEntry, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"
                                     CommandParameter="{Binding .}" >X</Button>
                             </DataTemplate>

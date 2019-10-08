@@ -38,7 +38,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.ViewData
         {
             get
             {
-                return !string.IsNullOrEmpty(WorkDescription);
+                return !string.IsNullOrEmpty(BeginTime);
             }
         }
 

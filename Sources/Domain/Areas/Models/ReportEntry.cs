@@ -1,6 +1,5 @@
 ﻿using System;
 using Mmu.Mlh.DomainExtensions.Areas.DomainModeling;
-using Mmu.Mlh.LanguageExtensions.Areas.Invariance;
 using Mmu.Mlh.LanguageExtensions.Areas.Types.Maybes;
 
 namespace Mmu.TimeManager.Domain.Areas.Models
@@ -8,9 +7,17 @@ namespace Mmu.TimeManager.Domain.Areas.Models
     public class ReportEntry : Entity<string>
     {
         public TimeStamp BeginTime { get; private set; }
-        public Project Project { get; private set; }
         public Maybe<TimeStamp> EndTime { get; private set; }
+        public Project Project { get; private set; }
         public string WorkDescription { get; private set; }
+
+        internal bool HasTimesSet
+        {
+            get
+            {
+                return EndTime.Evaluate(ts => true, () => false);
+            }
+        }
 
         public ReportEntry(
             TimeStamp beginTime,
@@ -19,9 +26,6 @@ namespace Mmu.TimeManager.Domain.Areas.Models
             Project project,
             string id) : base(id)
         {
-            Guard.StringNotNullOrEmpty(() => workDescription);
-            //Guard.ObjectNotNull(() => project);
-
             BeginTime = beginTime;
             EndTime = endTime;
             WorkDescription = workDescription;
