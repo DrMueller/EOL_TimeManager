@@ -21,13 +21,25 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
         private readonly ISapExportService _sapExportService;
         private EditDayViewModel _context;
 
-        public ICommand Cancel
+        public ICommand Clear
         {
             get
             {
                 return new RelayCommand(() =>
                 {
                     _context.RefreshData();
+                });
+            }
+        }
+
+        public ICommand CopyText
+        {
+            get
+            {
+                return new ParametredRelayCommand((object obj) =>
+                {
+                    var reportEntry = (ReportEntryViewData)obj;
+                    _context.SelectedReportEntry.WorkDescription = reportEntry.WorkDescription;
                 });
             }
         }

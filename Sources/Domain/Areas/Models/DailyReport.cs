@@ -11,7 +11,18 @@ namespace Mmu.TimeManager.Domain.Areas.Models
     {
         private readonly List<ReportEntry> _reportEntries;
         public DateTime Date { get; }
-        public IReadOnlyCollection<ReportEntry> ReportEntries => _reportEntries.Select(re => re.DeepCopy()).ToList();
+
+        public IReadOnlyCollection<ReportEntry> SortedReportEntries
+        {
+            get
+            {
+                return _reportEntries
+                    .Select(re => re.DeepCopy())
+                    .OrderBy(f => f.BeginTime.Hour)
+                    .ThenBy(f => f.BeginTime.Minute)
+                    .ToList();
+            }
+        }
 
         public DailyReport(
             DateTime date,

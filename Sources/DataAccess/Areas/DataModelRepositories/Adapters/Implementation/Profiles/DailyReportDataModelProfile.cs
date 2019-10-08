@@ -11,7 +11,7 @@ namespace Mmu.TimeManager.DataAccess.Areas.DataModelRepositories.Adapters.Implem
             CreateMap<DailyReport, DailyReportDataModel>()
                 .ForMember(d => d.Id, c => c.MapFrom(f => f.Id))
                 .ForMember(d => d.Date, c => c.MapFrom(f => f.Date))
-                .ForMember(d => d.ReportEntries, c => c.MapFrom(f => f.ReportEntries));
+                .ForMember(d => d.ReportEntries, c => c.MapFrom(f => f.SortedReportEntries));
         }
     }
 }

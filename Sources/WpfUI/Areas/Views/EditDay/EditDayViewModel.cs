@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Behaviors;
 using Mmu.TimeManager.Domain.Areas.Models;
@@ -12,15 +11,11 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
 {
     public class EditDayViewModel : ViewModelBase, IInitializableViewModel, IDisplayableViewModel, INavigatableViewModel
     {
-        private readonly CommandContainer _commandContainer;
         private readonly IEditDayViewService _viewService;
         private ReportEntryViewData _selectedReportEntry;
-        public ICommand Cancel => _commandContainer.Cancel;
+        public CommandContainer CommandContainer { get; }
         public DailyReport DailyReport { get; private set; }
         public string DayDateDescription => DailyReport.Date.ToShortDateString();
-        public ICommand DeleteEntry => _commandContainer.DeleteEntry;
-        public ICommand EditEntry => _commandContainer.EditEntry;
-        public ICommand ExportToSap => _commandContainer.ExportToSap;
         public string HeadingDescription { get; } = "Edit day";
         public string NavigationDescription { get; } = "Edit day";
         public int NavigationSequence { get; } = 0;
@@ -30,7 +25,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
         {
             get
             {
-                return DailyReport.ReportEntries.Select(re => new ReportEntryViewData(re.Id)
+                return DailyReport.SortedReportEntries.Select(re => new ReportEntryViewData(re.Id)
                 {
                     BeginTime = re.BeginTime.Description,
                     EndTime = re.EndTime.Evaluate(to => to.Description, () => string.Empty),
@@ -38,8 +33,6 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
                 }).ToList();
             }
         }
-
-        public ICommand Save => _commandContainer.Save;
 
         public ReportEntryViewData SelectedReportEntry
         {
@@ -60,12 +53,12 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
         {
             SelectedReportEntry = new ReportEntryViewData(string.Empty);
             _viewService = viewService;
-            _commandContainer = commandContainer;
+            CommandContainer = commandContainer;
         }
 
         public async Task InitializeAsync(params object[] initParams)
         {
-            await _commandContainer.InitializeAsync(this);
+            await CommandContainer.InitializeAsync(this);
             DailyReport = await _viewService.LoadDailyReportAsync(initParams);
         }
 

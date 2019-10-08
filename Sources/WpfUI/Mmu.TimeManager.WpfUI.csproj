@@ -6,10 +6,11 @@
     <UseWPF>true</UseWPF>
       <Features>IOperation</Features>
     <CodeAnalysisRuleSet>..\..\CA_ProductionCode.ruleset</CodeAnalysisRuleSet>
+    <ApplicationIcon>Infrastructure\Assets\App.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mmu.Mlh.WpfCoreExtensions" Version="1.1.8" />
+    <PackageReference Include="Mmu.Mlh.WpfCoreExtensions" Version="1.1.9" />
     <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
   </ItemGroup>
 

@@ -5,6 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="EditDayViewDict.xaml" />
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -22,19 +27,19 @@
 
             <Label Grid.Column="0" Content="{Binding DayDateDescription, Mode=OneWay}" />
             <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button Width="80" Height="30" Content="Export" Command="{Binding ExportToSap, Mode=OneWay}" />
+                <Button Style="{StaticResource ActionButton}" Content="Export" Command="{Binding CommandContainer.ExportToSap, Mode=OneWay}" />
             </StackPanel>
         </Grid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <TextBox Width="80" Margin="0,0,10,0" Text="{Binding SelectedReportEntry.BeginTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox Width="80" Margin="0,0,10,0" Text="{Binding SelectedReportEntry.EndTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Style="{StaticResource TimeTextBox}" Text="{Binding SelectedReportEntry.BeginTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Style="{StaticResource TimeTextBox}" Text="{Binding SelectedReportEntry.EndTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Label Content="{Binding SelectedReportEntry.ReportEntryId, Mode=OneWay}" />
         </StackPanel>
 
-        <TextBox Grid.Row="2" MinHeight="75" AcceptsReturn="True" Text="{Binding SelectedReportEntry.WorkDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" />
+        <TextBox Grid.Row="2" Style="{StaticResource WorkdescriptionTextBox}" Text="{Binding SelectedReportEntry.WorkDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="3" Margin="0,10,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -42,8 +47,8 @@
 
             <Label Grid.Column="0" Content="{Binding ReportedTimeDescription, Mode=OneWay}" />
             <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button Width="80" Height="30" Content="Cancel" Command="{Binding Cancel, Mode=OneWay}" />
-                <Button Width="80" Height="30" Content="Save" Command="{Binding Save, Mode=OneWay}" />
+                <Button Style="{StaticResource ActionButton}" Content="Clear" Command="{Binding CommandContainer.Clear, Mode=OneWay}" />
+                <Button  Style="{StaticResource ActionButton}" Content="Save" Command="{Binding CommandContainer.Save, Mode=OneWay}" />
             </StackPanel>
         </Grid>
 
@@ -76,7 +81,18 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button
-                                    Command="{Binding DataContext.EditEntry, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"
+                                    Style="{StaticResource EntryActionButton}"
+                                    Command="{Binding DataContext.CommandContainer.CopyText, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"
+                                    CommandParameter="{Binding .}" >↑</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                    Style="{StaticResource EntryActionButton}"
+                                    Command="{Binding DataContext.CommandContainer.EditEntry, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"
                                     CommandParameter="{Binding .}" >Edit</Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -84,8 +100,9 @@
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button
-                                    Command="{Binding DataContext.DeleteEntry, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"
+                                <Button 
+                                    Style="{StaticResource EntryActionButton}"
+                                    Command="{Binding DataContext.CommandContainer.DeleteEntry, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"
                                     CommandParameter="{Binding .}" >X</Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

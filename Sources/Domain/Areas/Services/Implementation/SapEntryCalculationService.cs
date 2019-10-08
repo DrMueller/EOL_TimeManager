@@ -10,7 +10,7 @@ namespace Mmu.TimeManager.Domain.Areas.Services.Implementation
     {
         public IReadOnlyCollection<SapEntry> CalculateEntries(DailyReport report)
         {
-            var grpd = report.ReportEntries.GroupBy(f => f.WorkDescription);
+            var grpd = report.SortedReportEntries.GroupBy(f => f.WorkDescription);
             var entries = grpd.Select(CreateFromReportEntries).ToList();
             return entries;
         }

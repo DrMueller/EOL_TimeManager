@@ -1,8 +1,14 @@
-﻿using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels;
 
 namespace Mmu.TimeManager.WpfUI.Areas.ViewData
 {
-    public class ReportEntryViewData : ViewModelBase
+    public class ReportEntryViewData : ValidatableViewModel
     {
         private string _beginTime;
         private string _endTime;
@@ -17,6 +23,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.ViewData
                 {
                     _beginTime = value;
                     OnPropertyChanged();
+                    ValidateProperty();
                 }
             }
         }
@@ -33,6 +40,8 @@ namespace Mmu.TimeManager.WpfUI.Areas.ViewData
                 }
             }
         }
+
+        public bool HasErrors => _errorsByProperty.Any();
 
         public bool IsValid
         {
@@ -57,9 +66,13 @@ namespace Mmu.TimeManager.WpfUI.Areas.ViewData
             }
         }
 
+        
+
         public ReportEntryViewData(string reportEntryId)
         {
             ReportEntryId = reportEntryId;
         }
+
+
     }
 }
