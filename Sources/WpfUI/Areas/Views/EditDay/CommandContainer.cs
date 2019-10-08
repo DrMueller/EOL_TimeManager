@@ -25,9 +25,9 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
         {
             get
             {
-                return new RelayCommand(() =>
+                return new RelayCommand(async () =>
                 {
-                    _context.RefreshData();
+                    await _context.ClearSelectionAsync();
                 });
             }
         }
@@ -54,7 +54,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
                     _context.DailyReport.RemoveReportEntry(reportEntry.ReportEntryId);
                     await _dailyReportRepository.SaveAsync(_context.DailyReport);
                     _informationPublisher.Publish(InformationEntry.CreateSuccess("Deleted", false, 5));
-                    _context.RebindReportEntries();
+                    await _context.RefreshReportEntriesAsync();
                 });
             }
         }
@@ -99,14 +99,14 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
                     if (upsertResult.IsSuccess)
                     {
                         await _dailyReportRepository.SaveAsync(_context.DailyReport);
-                        _context.RefreshData();
+                        await _context.RefreshReportEntriesAsync();
                         _informationPublisher.Publish(InformationEntry.CreateSuccess("Saved", false, 5));
                     }
                     else
                     {
                         _informationPublisher.Publish(InformationEntry.CreateInfo(upsertResult.ErrorMessage, false, 5));
                     }
-                }, () => _context.SelectedReportEntry.IsValid);
+                }, () => !_context.SelectedReportEntry.HasErrors);
             }
         }
 

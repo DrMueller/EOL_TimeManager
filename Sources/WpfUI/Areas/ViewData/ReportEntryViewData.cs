@@ -1,8 +1,42 @@
-﻿using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels;
+﻿using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Behaviors;
+using Mmu.Mlh.WpfCoreExtensions.Areas.Validations.Configuration.Services;
+using Mmu.Mlh.WpfCoreExtensions.Areas.Validations.Rules;
+using Mmu.Mlh.WpfCoreExtensions.Areas.Validations.Validation.Models;
+using Mmu.TimeManager.Domain.Areas.Models;
 
 namespace Mmu.TimeManager.WpfUI.Areas.ViewData
 {
-    public class ReportEntryViewData : ViewModelBase
+    public class EndTimeAfterBeginTimeRule : IValidationRule
+    {
+        private readonly ReportEntryViewData _context;
+
+        public EndTimeAfterBeginTimeRule(ReportEntryViewData context)
+        {
+            _context = context;
+        }
+
+        public ValidationResult Validate(object value)
+        {
+            var endTime = TimeStamp.TryParsing(_context.EndTime).Reduce(() => null);
+            var beginTime = TimeStamp.TryParsing(_context.BeginTime).Reduce(() => null);
+
+            if (Equals(null, endTime) || Equals(null, beginTime))
+            {
+                return ValidationResult.CreateValid();
+            }
+
+            if (beginTime.ToTimeSpan() >= endTime.ToTimeSpan())
+            {
+                return ValidationResult.CreateInvalid("End time must be after begin time.");
+            }
+            else
+            {
+                return ValidationResult.CreateValid();
+            }
+        }
+    }
+
+    public class ReportEntryViewData : ValidatableViewModel<ReportEntryViewData>
     {
         private string _beginTime;
         private string _endTime;
@@ -34,15 +68,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.ViewData
             }
         }
 
-        public bool IsValid
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(BeginTime);
-            }
-        }
-
-        public string ReportEntryId { get; }
+        public string ReportEntryId { get; set; }
 
         public string WorkDescription
         {
@@ -57,9 +83,19 @@ namespace Mmu.TimeManager.WpfUI.Areas.ViewData
             }
         }
 
-        public ReportEntryViewData(string reportEntryId)
+        protected override ValidationContainer<ReportEntryViewData> ConfigureValidation(IValidationConfigurationBuilder<ReportEntryViewData> builder)
         {
-            ReportEntryId = reportEntryId;
+            return builder
+                .ForProperty(f => f.BeginTime)
+                .ApplyRule(ValidationRuleFactory.StringNotNullOrEmpty())
+                .ApplyRule(new EndTimeAfterBeginTimeRule(this))
+                .BuildForProperty()
+                .ForProperty(f => f.EndTime)
+                .ApplyRule(new EndTimeAfterBeginTimeRule(this))
+                .BuildForProperty()
+                .ForProperty(f => f.WorkDescription)
+                .BuildForProperty()
+                .Build();
         }
     }
 }

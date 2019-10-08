@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using Mmu.Mlh.DomainExtensions.Areas.DomainModeling;
 using Mmu.Mlh.LanguageExtensions.Areas.Invariance;
 using Mmu.Mlh.LanguageExtensions.Areas.Types.Maybes;
@@ -40,10 +41,16 @@ namespace Mmu.TimeManager.Domain.Areas.Models
                 return Maybe.CreateNone<TimeStamp>();
             }
 
+            var reg = new Regex("([0-9]{1,2})(:)([0-9]{1,2})");
+            if (!reg.IsMatch(str))
+            {
+                return Maybe.CreateNone<TimeStamp>();
+            }
+
             return Parse(str);
         }
 
-        internal TimeSpan ToTimeSpan()
+        public TimeSpan ToTimeSpan()
         {
             return new TimeSpan(
                 int.Parse(Hour),
