@@ -14,7 +14,6 @@ namespace Mmu.TimeManager.Domain.Areas.Factories.Implementation
                 beginTime,
                 endTime,
                 workDescription,
-                null,
                 id);
         }
     }

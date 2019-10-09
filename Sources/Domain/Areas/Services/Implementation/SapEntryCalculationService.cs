@@ -21,7 +21,7 @@ namespace Mmu.TimeManager.Domain.Areas.Services.Implementation
             entries.ForEach(f => reportedTimeSpans += f.CalculateReportedMinutes());
 
             return new SapEntry(
-                reportedTimeSpans.TotalHours.ToString(),
+                Math.Round(reportedTimeSpans.TotalHours, 2).ToString(),
                 string.IsNullOrEmpty(entries.Key) ? "No description" : entries.Key);
         }
     }

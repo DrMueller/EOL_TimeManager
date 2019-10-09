@@ -8,7 +8,6 @@ namespace Mmu.TimeManager.Domain.Areas.Models
     {
         public TimeStamp BeginTime { get; private set; }
         public Maybe<TimeStamp> EndTime { get; private set; }
-        public Project Project { get; private set; }
         public string WorkDescription { get; private set; }
 
         internal bool HasTimesSet
@@ -23,19 +22,16 @@ namespace Mmu.TimeManager.Domain.Areas.Models
             TimeStamp beginTime,
             Maybe<TimeStamp> endTime,
             string workDescription,
-            Project project,
             string id) : base(id)
         {
             BeginTime = beginTime;
             EndTime = endTime;
             WorkDescription = workDescription;
-            Project = project;
         }
 
         internal void AlignValues(ReportEntry newEntry)
         {
             BeginTime = newEntry.BeginTime;
-            Project = newEntry.Project;
             EndTime = newEntry.EndTime;
             WorkDescription = newEntry.WorkDescription;
         }

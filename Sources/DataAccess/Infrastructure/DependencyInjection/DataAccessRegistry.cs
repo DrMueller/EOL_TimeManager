@@ -21,10 +21,6 @@ namespace Mmu.TimeManager.DataAccess.Infrastructure.DependencyInjection
             For<IDailyReportDataModelAdapter>().Use<DailyReportDataModelAdapter>().Singleton();
             For<IDailyReportDataModelRepository>().Use<DailyReportDataModelRepository>().Singleton();
             For<IDailyReportRepository>().Use<DailyReportRepository>().Singleton();
-
-            For<IProjectDataModelAdapter>().Use<ProjectDataModelAdapter>().Singleton();
-            For<IProjectDataModelRepository>().Use<ProjectDataModelRepository>().Singleton();
-            For<IProjectRepository>().Use<ProjectRepository>().Singleton();
         }
     }
 }
