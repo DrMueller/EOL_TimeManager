@@ -18,8 +18,8 @@ namespace Mmu.TimeManager.Domain.Areas.Models
             {
                 return _reportEntries
                     .Select(re => re.DeepCopy())
-                    .OrderBy(f => f.BeginTime.Hour)
-                    .ThenBy(f => f.BeginTime.Minute)
+                    .OrderByDescending(f => f.BeginTime.Hour)
+                    .ThenByDescending(f => f.BeginTime.Minute)
                     .ToList();
             }
         }
