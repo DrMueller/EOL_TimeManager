@@ -20,7 +20,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Views.EditDay
         public DailyReport DailyReport { get; private set; }
         public string DayDateDescription => DailyReport.Date.ToShortDateString();
         public string HeadingDescription { get; } = "Edit day";
-        public string NavigationDescription { get; } = "Edit day";
+        public string NavigationDescription { get; } = "Today";
         public int NavigationSequence { get; } = 0;
         public string ReportedTimeDescription => DailyReport.CalculateReportedHours().ToString();
 

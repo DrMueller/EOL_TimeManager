@@ -6,36 +6,6 @@ using Mmu.TimeManager.Domain.Areas.Models;
 
 namespace Mmu.TimeManager.WpfUI.Areas.ViewData
 {
-    public class EndTimeAfterBeginTimeRule : IValidationRule
-    {
-        private readonly ReportEntryViewData _context;
-
-        public EndTimeAfterBeginTimeRule(ReportEntryViewData context)
-        {
-            _context = context;
-        }
-
-        public ValidationResult Validate(object value)
-        {
-            var endTime = TimeStamp.TryParsing(_context.EndTime).Reduce(() => null);
-            var beginTime = TimeStamp.TryParsing(_context.BeginTime).Reduce(() => null);
-
-            if (Equals(null, endTime) || Equals(null, beginTime))
-            {
-                return ValidationResult.CreateValid();
-            }
-
-            if (beginTime.ToTimeSpan() >= endTime.ToTimeSpan())
-            {
-                return ValidationResult.CreateInvalid("End time must be after begin time.");
-            }
-            else
-            {
-                return ValidationResult.CreateValid();
-            }
-        }
-    }
-
     public class ReportEntryViewData : ValidatableViewModel<ReportEntryViewData>
     {
         private string _beginTime;
@@ -88,14 +58,34 @@ namespace Mmu.TimeManager.WpfUI.Areas.ViewData
             return builder
                 .ForProperty(f => f.BeginTime)
                 .ApplyRule(ValidationRuleFactory.StringNotNullOrEmpty())
-                .ApplyRule(new EndTimeAfterBeginTimeRule(this))
+                .ApplyRule(BeginTimeBeforeEndTime)
                 .BuildForProperty()
                 .ForProperty(f => f.EndTime)
-                .ApplyRule(new EndTimeAfterBeginTimeRule(this))
+                .ApplyRule(BeginTimeBeforeEndTime)
                 .BuildForProperty()
                 .ForProperty(f => f.WorkDescription)
                 .BuildForProperty()
                 .Build();
+        }
+
+        private ValidationResult BeginTimeBeforeEndTime(object value)
+        {
+            var endTime = TimeStamp.TryParsing(EndTime).Reduce(() => null);
+            var beginTime = TimeStamp.TryParsing(BeginTime).Reduce(() => null);
+
+            if (Equals(null, endTime) || Equals(null, beginTime))
+            {
+                return ValidationResult.CreateValid();
+            }
+
+            if (beginTime.ToTimeSpan() >= endTime.ToTimeSpan())
+            {
+                return ValidationResult.CreateInvalid("End time must be after begin time.");
+            }
+            else
+            {
+                return ValidationResult.CreateValid();
+            }
         }
     }
 }
