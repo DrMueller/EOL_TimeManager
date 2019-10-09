@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mmu.Mlh.DomainExtensions" Version="2.1.5" />
+    <PackageReference Include="Mmu.Mlh.DomainExtensions" Version="2.1.6" />
   </ItemGroup>
 
 </Project>

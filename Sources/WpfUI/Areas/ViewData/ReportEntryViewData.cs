@@ -73,7 +73,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.ViewData
             var endTime = TimeStamp.TryParsing(EndTime).Reduce(() => null);
             var beginTime = TimeStamp.TryParsing(BeginTime).Reduce(() => null);
 
-            if (Equals(null, endTime) || Equals(null, beginTime))
+            if (beginTime == null || endTime == null)
             {
                 return ValidationResult.CreateValid();
             }
