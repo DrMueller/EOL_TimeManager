@@ -19,7 +19,9 @@ namespace Mmu.TimeManager.WpfUI.Areas.Overview.ViewServices.Implementation
         public async Task<IReadOnlyCollection<DayOverviewViewData>> LoadAllAsync()
         {
             var allDailyReports = await _dailyReportRepository.LoadAllAsync();
-            var result = allDailyReports.Select(AdaptToOverview).ToList();
+            var result = allDailyReports
+                .OrderByDescending(f => f.Date)
+                .Select(AdaptToOverview).ToList();
             return result;
         }
 
