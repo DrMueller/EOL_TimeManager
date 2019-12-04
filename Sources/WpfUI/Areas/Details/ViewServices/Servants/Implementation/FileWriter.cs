@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Abstractions;
 using System.Text;
@@ -21,15 +20,17 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.ViewServices.Servants.Implementati
         {
             var sb = new StringBuilder();
 
-            entries.ForEach(f =>
-            {
-                sb.Append(f.AbsoluteTimeDescription);
-                sb.Append("\t");
-                sb.AppendLine(f.DescriptionExternal);
-            });
+            entries.ForEach(
+                f =>
+                {
+                    sb.Append(f.AbsoluteTimeDescription);
+                    sb.Append("\t");
+                    sb.Append(f.TimeDescriptionInMinutes);
+                    sb.Append("\t");
+                    sb.AppendLine(f.DescriptionExternal);
+                });
 
             var tempFileName = _fileSystem.Path.GetTempFileName();
-
             _fileSystem.File.WriteAllText(tempFileName, sb.ToString());
             Process.Start("notepad.exe", tempFileName);
         }

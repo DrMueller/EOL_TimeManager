@@ -7,20 +7,20 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.ViewServices.Implementation
     public class DayEntriesExportViewService : IDayEntriesExportViewService
     {
         private readonly IFileWriter _fileWriter;
-        private readonly IExportReportEntryCalculationService _sapEntryCalculationService;
+        private readonly IExportReportEntryCalculationService _exportCalculationService;
 
         public DayEntriesExportViewService(
-            IExportReportEntryCalculationService sapEntryCalculationService,
+            IExportReportEntryCalculationService exportCalculationService,
             IFileWriter fileWriter)
         {
-            _sapEntryCalculationService = sapEntryCalculationService;
+            _exportCalculationService = exportCalculationService;
             _fileWriter = fileWriter;
         }
 
         public void ExportToFile(DailyReport report)
         {
-            var sapEntries = _sapEntryCalculationService.CalculateEntries(report);
-            _fileWriter.WriteAndOpenTextFile(sapEntries);
+            var entries = _exportCalculationService.CalculateEntries(report);
+            _fileWriter.WriteAndOpenTextFile(entries);
         }
     }
 }

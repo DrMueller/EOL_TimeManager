@@ -63,7 +63,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.Views.DayDetails
         {
             get
             {
-                return new ParametredRelayCommand((object obj) =>
+                return new ParametredRelayCommand(obj =>
                 {
                     var reportEntry = (ReportEntryViewData)obj;
                     _context.SelectedReportEntry = reportEntry.DeepCopy();
@@ -71,7 +71,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.Views.DayDetails
             }
         }
 
-        public ICommand ExportToSap
+        public ICommand ExportToFile
         {
             get
             {

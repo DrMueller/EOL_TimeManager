@@ -16,7 +16,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Overview.Views.DaysOverview
         {
             get
             {
-                return new ParametredRelayCommand((object obj) =>
+                return new ParametredRelayCommand(obj =>
                 {
                     var overviewEntry = (DayOverviewViewData)obj;
                     _displayService.DisplayAsync<EditDayViewModel>(overviewEntry.Date);

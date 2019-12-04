@@ -5,18 +5,18 @@ namespace Mmu.TimeManager.Domain.Areas.Models
     public class ExportReportEntry
     {
         public string AbsoluteTimeDescription { get; }
-        public string RelativeTimeDescription { get; }
+        public string TimeDescriptionInMinutes { get; }
         public string DescriptionExternal { get; }
 
         public ExportReportEntry(
             string absoluteTimeDescription,
-            string relativeTimeDescription,
+            string timeDescriptionInMinutes,
             string descriptionExternal)
         {
             Guard.StringNotNullOrEmpty(() => descriptionExternal);
 
             AbsoluteTimeDescription = absoluteTimeDescription;
-            RelativeTimeDescription = relativeTimeDescription;
+            TimeDescriptionInMinutes = timeDescriptionInMinutes;
             DescriptionExternal = descriptionExternal;
         }
     }

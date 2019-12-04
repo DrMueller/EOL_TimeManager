@@ -21,10 +21,11 @@ namespace Mmu.TimeManager.Domain.Areas.Services.Implementation
             var reportedTimeSpans = default(TimeSpan);
             entries.ForEach(f => reportedTimeSpans += f.CalculateReportedMinutes());
             var absoluteTime = Math.Round(reportedTimeSpans.TotalHours, 2).ToString(CultureInfo.InvariantCulture);
+            var timeDescriptionInMinutes = reportedTimeSpans.ToString(@"hh\:mm");
 
             return new ExportReportEntry(
                 absoluteTime,
-                reportedTimeSpans.ToString(),
+                timeDescriptionInMinutes,
                 string.IsNullOrEmpty(entries.Key) ? "No description" : entries.Key);
         }
     }
