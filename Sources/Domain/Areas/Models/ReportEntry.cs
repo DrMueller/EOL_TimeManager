@@ -38,10 +38,7 @@ namespace Mmu.TimeManager.Domain.Areas.Models
 
         internal TimeSpan CalculateReportedMinutes()
         {
-            return EndTime.Evaluate(to =>
-             {
-                 return to.ToTimeSpan() - BeginTime.ToTimeSpan();
-             }, () => default);
+            return EndTime.Evaluate(to => to.ToTimeSpan() - BeginTime.ToTimeSpan(), () => default);
         }
     }
 }

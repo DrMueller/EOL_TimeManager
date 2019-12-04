@@ -12,7 +12,7 @@ namespace Mmu.TimeManager.Domain.Infrastructure.DependencyInjection
         {
             For<IDailyReportFactory>().Use<DailyReportFactory>().Singleton();
             For<IReportEntryFactory>().Use<ReportEntryFactory>().Singleton();
-            For<ISapEntryCalculationService>().Use<SapEntryCalculationService>().Singleton();
+            For<IExportReportEntryCalculationService>().Use<ExportReportEntryCalculationService>().Singleton();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Abstractions;
 using System.Text;
@@ -16,7 +17,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.ViewServices.Servants.Implementati
             _fileSystem = fileSystem;
         }
 
-        public void WriteAndOpenTextFile(IReadOnlyCollection<SapEntry> entries)
+        public void WriteAndOpenTextFile(IReadOnlyCollection<ExportReportEntry> entries)
         {
             var sb = new StringBuilder();
 
@@ -28,6 +29,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.ViewServices.Servants.Implementati
             });
 
             var tempFileName = _fileSystem.Path.GetTempFileName();
+
             _fileSystem.File.WriteAllText(tempFileName, sb.ToString());
             Process.Start("notepad.exe", tempFileName);
         }

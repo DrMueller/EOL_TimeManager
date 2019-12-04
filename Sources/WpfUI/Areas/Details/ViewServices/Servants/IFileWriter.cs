@@ -7,6 +7,6 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.ViewServices.Servants
 {
     public interface IFileWriter
     {
-        void WriteAndOpenTextFile(IReadOnlyCollection<SapEntry> entries);
+        void WriteAndOpenTextFile(IReadOnlyCollection<ExportReportEntry> entries);
     }
 }

@@ -18,7 +18,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.Views.DayDetails
         private readonly IDailyReportRepository _dailyReportRepository;
         private readonly IInformationPublisher _informationPublisher;
         private readonly IReportEntryFactory _reportEntryFactory;
-        private readonly ISapExportViewService _sapExportService;
+        private readonly IDayEntriesExportViewService _sapExportService;
         private EditDayViewModel _context;
 
         public ICommand Clear
@@ -77,7 +77,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.Views.DayDetails
             {
                 return new RelayCommand(() =>
                 {
-                    _sapExportService.Export(_context.DailyReport);
+                    _sapExportService.ExportToFile(_context.DailyReport);
                 });
             }
         }
@@ -111,7 +111,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.Views.DayDetails
         }
 
         public CommandContainer(
-            ISapExportViewService sapExportService,
+            IDayEntriesExportViewService sapExportService,
             IReportEntryFactory reportEntryFactory,
             IDailyReportRepository dailyReportRepository,
             IInformationPublisher informationPublisher)
