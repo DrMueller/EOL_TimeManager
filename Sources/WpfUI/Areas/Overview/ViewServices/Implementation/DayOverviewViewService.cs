@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Mmu.TimeManager.Domain.Areas.Models;
+using Mmu.TimeManager.Domain.Areas.Models.Management;
 using Mmu.TimeManager.Domain.Areas.Repositories;
 using Mmu.TimeManager.WpfUI.Areas.Overview.ViewData;
 
@@ -25,7 +25,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Overview.ViewServices.Implementation
             return result;
         }
 
-        private DayOverviewViewData AdaptToOverview(DailyReport dailyReport)
+        private static DayOverviewViewData AdaptToOverview(DailyReport dailyReport)
         {
             return new DayOverviewViewData(
                 dailyReport.Date,

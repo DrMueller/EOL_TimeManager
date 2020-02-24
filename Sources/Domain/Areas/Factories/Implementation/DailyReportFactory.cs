@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Mmu.TimeManager.Domain.Areas.Models;
+using Mmu.TimeManager.Domain.Areas.Models.Management;
 
 namespace Mmu.TimeManager.Domain.Areas.Factories.Implementation
 {

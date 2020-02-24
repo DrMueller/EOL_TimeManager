@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Mmu.TimeManager.Domain.Areas.Models;
+﻿using Mmu.TimeManager.Domain.Areas.Models.Export;
 
 namespace Mmu.TimeManager.WpfUI.Areas.Details.ViewServices.Servants
 {
     public interface IFileWriter
     {
-        void WriteAndOpenTextFile(IReadOnlyCollection<ExportReportEntry> entries);
+        void WriteAndOpenTextFile(DayExport dayExport);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Mmu.Mlh.LanguageExtensions.Areas.Types.Maybes;
-using Mmu.TimeManager.Domain.Areas.Models;
+using Mmu.TimeManager.Domain.Areas.Models.Management;
 
 namespace Mmu.TimeManager.Domain.Areas.Factories
 {

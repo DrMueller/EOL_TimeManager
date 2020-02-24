@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Behaviors;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Services;
-using Mmu.TimeManager.Domain.Areas.Models;
+using Mmu.TimeManager.Domain.Areas.Models.Management;
 using Mmu.TimeManager.WpfUI.Areas.Details.ViewData;
 using Mmu.TimeManager.WpfUI.Areas.Details.ViewServices;
 
 namespace Mmu.TimeManager.WpfUI.Areas.Details.Views.DayDetails
 {
-    public class EditDayViewModel : ViewModelBase, IInitializableViewModel, IDisplayableViewModel, INavigatableViewModel
+    public class EditDayViewModel : ViewModelBase, IInitializableViewModel, INavigatableViewModel
     {
         private readonly IViewModelFactory _viewModelFactory;
         private readonly IDayDetailsViewService _viewService;
@@ -29,7 +29,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.Views.DayDetails
             get => _reportEntries;
             set
             {
-                if (_reportEntries != value)
+                if (!Equals(_reportEntries, value))
                 {
                     _reportEntries = value;
                     OnPropertyChanged();

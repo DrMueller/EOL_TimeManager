@@ -5,7 +5,7 @@ using Mmu.Mlh.DomainExtensions.Areas.DomainModeling;
 using Mmu.Mlh.LanguageExtensions.Areas.DeepCopying;
 using Mmu.Mlh.LanguageExtensions.Areas.Invariance;
 
-namespace Mmu.TimeManager.Domain.Areas.Models
+namespace Mmu.TimeManager.Domain.Areas.Models.Management
 {
     public class DailyReport : AggregateRoot<string>
     {
@@ -59,9 +59,10 @@ namespace Mmu.TimeManager.Domain.Areas.Models
         public UpdateReportEntryResult UpsertReportEntry(ReportEntry entry)
         {
             var overlapping = _reportEntries.Where(f => f.HasTimesSet)
-                .Any(f => f.Id != entry.Id &&
-                (entry.BeginTime.ToTimeSpan() < f.EndTime.Reduce(() => null).ToTimeSpan()) &&
-                (entry.EndTime.Reduce(() => null).ToTimeSpan() > f.BeginTime.ToTimeSpan()));
+                .Any(
+                    f => f.Id != entry.Id &&
+                        (entry.BeginTime.ToTimeSpan() < f.EndTime.Reduce(() => null).ToTimeSpan()) &&
+                        (entry.EndTime.Reduce(() => null).ToTimeSpan() > f.BeginTime.ToTimeSpan()));
 
             if (overlapping)
             {

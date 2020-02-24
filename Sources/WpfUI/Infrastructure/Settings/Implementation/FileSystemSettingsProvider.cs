@@ -7,10 +7,7 @@ namespace Mmu.TimeManager.WpfUI.Infrastructure.Settings.Implementation
     {
         public FileSystemSettings ProvideFileSystemSettings()
         {
-            return new FileSystemSettings
-            {
-                DirectoryPath = @"C:\Work\TimeManager"
-            };
+            return new FileSystemSettings { DirectoryPath = @"C:\Work\TimeManager" };
         }
     }
 }

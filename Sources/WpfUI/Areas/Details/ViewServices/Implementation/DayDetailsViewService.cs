@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Mmu.TimeManager.Domain.Areas.Factories;
-using Mmu.TimeManager.Domain.Areas.Models;
+using Mmu.TimeManager.Domain.Areas.Models.Management;
 using Mmu.TimeManager.Domain.Areas.Repositories;
 
 namespace Mmu.TimeManager.WpfUI.Areas.Details.ViewServices.Implementation

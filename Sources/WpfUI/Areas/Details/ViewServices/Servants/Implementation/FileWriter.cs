@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO.Abstractions;
 using System.Text;
 using Mmu.Mlh.LanguageExtensions.Areas.Collections;
-using Mmu.TimeManager.Domain.Areas.Models;
+using Mmu.TimeManager.Domain.Areas.Models.Export;
 
 namespace Mmu.TimeManager.WpfUI.Areas.Details.ViewServices.Servants.Implementation
 {
@@ -16,19 +15,28 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.ViewServices.Servants.Implementati
             _fileSystem = fileSystem;
         }
 
-        public void WriteAndOpenTextFile(IReadOnlyCollection<ExportReportEntry> entries)
+        public void WriteAndOpenTextFile(DayExport dayExport)
         {
             var sb = new StringBuilder();
 
-            entries.ForEach(
+            sb.Append("Export vom: ");
+            sb.AppendLine(dayExport.DateToExport.ToShortDateString());
+            sb.AppendLine();
+
+            dayExport.Entries.ForEach(
                 f =>
                 {
-                    sb.Append(f.AbsoluteTimeDescription);
+                    sb.Append(f.TimeDescription.AbsoluteTimeDescription);
                     sb.Append("\t");
-                    sb.Append(f.TimeDescriptionInMinutes);
+                    sb.Append(f.TimeDescription.TimeDescriptionInMinutes);
                     sb.Append("\t");
                     sb.AppendLine(f.DescriptionExternal);
                 });
+
+            sb.Append(dayExport.Overview.TimeDescription.AbsoluteTimeDescription);
+            sb.Append("\t");
+            sb.Append(dayExport.Overview.TimeDescription.TimeDescriptionInMinutes);
+            sb.Append("\t");
 
             var tempFileName = _fileSystem.Path.GetTempFileName();
             _fileSystem.File.WriteAllText(tempFileName, sb.ToString());

@@ -12,6 +12,12 @@
         <Setter Property="Margin" Value="10,0,0,0" />
     </Style>
 
+    <Style x:Key="NavigationButton" TargetType="Button">
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Margin" Value="10,0,0,0" />
+    </Style>
+
     <Style x:Key="WorkdescriptionTextBox" TargetType="TextBox">
         <Setter Property="MinHeight" Value="75" />
         <Setter Property="TextWrapping" Value="Wrap" />
@@ -22,5 +28,9 @@
         <Setter Property="Height" Value="25" />
         <Setter Property="Width" Value="80" />
         <Setter Property="Margin" Value="0,0,10,0" />
+    </Style>
+
+    <Style x:Key="PanelWithMarginBottom" TargetType="Panel">
+        <Setter Property="Margin" Value="0,0,0,10" />
     </Style>
 </ResourceDictionary>

@@ -1,4 +1,4 @@
-﻿using Mmu.TimeManager.Domain.Areas.Models;
+﻿using Mmu.TimeManager.Domain.Areas.Models.Management;
 
 namespace Mmu.TimeManager.WpfUI.Areas.Details.ViewServices
 {

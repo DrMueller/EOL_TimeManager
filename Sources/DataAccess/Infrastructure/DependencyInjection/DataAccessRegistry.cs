@@ -12,11 +12,12 @@ namespace Mmu.TimeManager.DataAccess.Infrastructure.DependencyInjection
     {
         public DataAccessRegistry()
         {
-            Scan(scanner =>
-            {
-                scanner.AssemblyContainingType<DataAccessRegistry>();
-                scanner.WithDefaultConventions();
-            });
+            Scan(
+                scanner =>
+                {
+                    scanner.AssemblyContainingType<DataAccessRegistry>();
+                    scanner.WithDefaultConventions();
+                });
 
             For<IDailyReportDataModelAdapter>().Use<DailyReportDataModelAdapter>().Singleton();
             For<IDailyReportDataModelRepository>().Use<DailyReportDataModelRepository>().Singleton();

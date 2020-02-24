@@ -4,7 +4,7 @@ using Mmu.Mlh.WpfCoreExtensions.Areas.Initialization.Orchestration.Services;
 
 namespace Mmu.TimeManager.WpfUI
 {
-    public partial class App : Application
+    public partial class App
     {
         protected override async void OnStartup(StartupEventArgs e)
         {

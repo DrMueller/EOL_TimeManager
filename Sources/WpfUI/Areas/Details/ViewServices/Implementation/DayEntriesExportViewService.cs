@@ -1,26 +1,26 @@
-﻿using Mmu.TimeManager.Domain.Areas.Models;
-using Mmu.TimeManager.Domain.Areas.Services;
+﻿using Mmu.TimeManager.Domain.Areas.Factories;
+using Mmu.TimeManager.Domain.Areas.Models.Management;
 using Mmu.TimeManager.WpfUI.Areas.Details.ViewServices.Servants;
 
 namespace Mmu.TimeManager.WpfUI.Areas.Details.ViewServices.Implementation
 {
     public class DayEntriesExportViewService : IDayEntriesExportViewService
     {
+        private readonly IDayExportFactory _dayExportFactory;
         private readonly IFileWriter _fileWriter;
-        private readonly IExportReportEntryCalculationService _exportCalculationService;
 
         public DayEntriesExportViewService(
-            IExportReportEntryCalculationService exportCalculationService,
+            IDayExportFactory dayExportFactory,
             IFileWriter fileWriter)
         {
-            _exportCalculationService = exportCalculationService;
+            _dayExportFactory = dayExportFactory;
             _fileWriter = fileWriter;
         }
 
         public void ExportToFile(DailyReport report)
         {
-            var entries = _exportCalculationService.CalculateEntries(report);
-            _fileWriter.WriteAndOpenTextFile(entries);
+            var dayExport = _dayExportFactory.Create(report);
+            _fileWriter.WriteAndOpenTextFile(dayExport);
         }
     }
 }

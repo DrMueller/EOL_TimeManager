@@ -1,4 +1,4 @@
-﻿namespace Mmu.TimeManager.Domain.Areas.Models
+﻿namespace Mmu.TimeManager.Domain.Areas.Models.Management
 {
     public class UpdateReportEntryResult
     {

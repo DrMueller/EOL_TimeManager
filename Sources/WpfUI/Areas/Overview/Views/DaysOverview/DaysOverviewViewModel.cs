@@ -7,7 +7,7 @@ using Mmu.TimeManager.WpfUI.Areas.Overview.ViewServices;
 
 namespace Mmu.TimeManager.WpfUI.Areas.Overview.Views.DaysOverview
 {
-    public class DaysOverviewViewModel : ViewModelBase, IInitializableViewModel, IDisplayableViewModel, INavigatableViewModel
+    public class DaysOverviewViewModel : ViewModelBase, IInitializableViewModel, INavigatableViewModel
     {
         private readonly IDayOverviewViewService _dayOverviewViewService;
         private IReadOnlyCollection<DayOverviewViewData> _overviewEntries;
@@ -21,7 +21,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Overview.Views.DaysOverview
             get => _overviewEntries;
             set
             {
-                if (_overviewEntries != value)
+                if (!Equals(_overviewEntries, value))
                 {
                     _overviewEntries = value;
                     OnPropertyChanged();

@@ -5,8 +5,9 @@ using Mmu.Mlh.WpfCoreExtensions.Areas.Aspects.InformationHandling.Models;
 using Mmu.Mlh.WpfCoreExtensions.Areas.Aspects.InformationHandling.Services;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.Commands;
 using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.CommandManagement.ViewModelCommands;
+using Mmu.Mlh.WpfCoreExtensions.Areas.MvvmShell.ViewModels.Services;
 using Mmu.TimeManager.Domain.Areas.Factories;
-using Mmu.TimeManager.Domain.Areas.Models;
+using Mmu.TimeManager.Domain.Areas.Models.Management;
 using Mmu.TimeManager.Domain.Areas.Repositories;
 using Mmu.TimeManager.WpfUI.Areas.Details.ViewData;
 using Mmu.TimeManager.WpfUI.Areas.Details.ViewServices;
@@ -19,16 +20,18 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.Views.DayDetails
         private readonly IInformationPublisher _informationPublisher;
         private readonly IReportEntryFactory _reportEntryFactory;
         private readonly IDayEntriesExportViewService _sapExportService;
+        private readonly IViewModelDisplayService _vmDisplayService;
         private EditDayViewModel _context;
 
         public ICommand Clear
         {
             get
             {
-                return new RelayCommand(async () =>
-                {
-                    await _context.ClearSelectionAsync();
-                });
+                return new RelayCommand(
+                    async () =>
+                    {
+                        await _context.ClearSelectionAsync();
+                    });
             }
         }
 
@@ -36,11 +39,12 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.Views.DayDetails
         {
             get
             {
-                return new ParametredRelayCommand((object obj) =>
-                {
-                    var reportEntry = (ReportEntryViewData)obj;
-                    _context.SelectedReportEntry.WorkDescription = reportEntry.WorkDescription;
-                });
+                return new ParametredRelayCommand(
+                    obj =>
+                    {
+                        var reportEntry = (ReportEntryViewData)obj;
+                        _context.SelectedReportEntry.WorkDescription = reportEntry.WorkDescription;
+                    });
             }
         }
 
@@ -48,14 +52,15 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.Views.DayDetails
         {
             get
             {
-                return new ParametredRelayCommand(async (object obj) =>
-                {
-                    var reportEntry = (ReportEntryViewData)obj;
-                    _context.DailyReport.RemoveReportEntry(reportEntry.ReportEntryId);
-                    await _dailyReportRepository.SaveAsync(_context.DailyReport);
-                    _informationPublisher.Publish(InformationEntry.CreateSuccess("Deleted", false, 5));
-                    await _context.RefreshReportEntriesAsync();
-                });
+                return new ParametredRelayCommand(
+                    async obj =>
+                    {
+                        var reportEntry = (ReportEntryViewData)obj;
+                        _context.DailyReport.RemoveReportEntry(reportEntry.ReportEntryId);
+                        await _dailyReportRepository.SaveAsync(_context.DailyReport);
+                        _informationPublisher.Publish(InformationEntry.CreateSuccess("Deleted", false, 5));
+                        await _context.RefreshReportEntriesAsync();
+                    });
             }
         }
 
@@ -63,11 +68,12 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.Views.DayDetails
         {
             get
             {
-                return new ParametredRelayCommand(obj =>
-                {
-                    var reportEntry = (ReportEntryViewData)obj;
-                    _context.SelectedReportEntry = reportEntry.DeepCopy();
-                });
+                return new ParametredRelayCommand(
+                    obj =>
+                    {
+                        var reportEntry = (ReportEntryViewData)obj;
+                        _context.SelectedReportEntry = reportEntry.DeepCopy();
+                    });
             }
         }
 
@@ -75,10 +81,35 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.Views.DayDetails
         {
             get
             {
-                return new RelayCommand(() =>
-                {
-                    _sapExportService.ExportToFile(_context.DailyReport);
-                });
+                return new RelayCommand(
+                    () =>
+                    {
+                        _sapExportService.ExportToFile(_context.DailyReport);
+                    });
+            }
+        }
+
+        public ICommand NavigateToNextDay
+        {
+            get
+            {
+                return new RelayCommand(
+                    () =>
+                    {
+                        NavigateToDayDetails(1);
+                    });
+            }
+        }
+
+        public ICommand NavigateToPreviousDay
+        {
+            get
+            {
+                return new RelayCommand(
+                    () =>
+                    {
+                        NavigateToDayDetails(-1);
+                    });
             }
         }
 
@@ -86,27 +117,29 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.Views.DayDetails
         {
             get
             {
-                return new RelayCommand(async () =>
-                {
-                    var entry = _context.SelectedReportEntry;
-                    var reportEntry = _reportEntryFactory.Create(
-                        TimeStamp.Parse(entry.BeginTime),
-                        TimeStamp.TryParsing(entry.EndTime),
-                        entry.WorkDescription,
-                        entry.ReportEntryId);
+                return new RelayCommand(
+                    async () =>
+                    {
+                        var entry = _context.SelectedReportEntry;
+                        var reportEntry = _reportEntryFactory.Create(
+                            TimeStamp.Parse(entry.BeginTime),
+                            TimeStamp.TryParsing(entry.EndTime),
+                            entry.WorkDescription,
+                            entry.ReportEntryId);
 
-                    var upsertResult = _context.DailyReport.UpsertReportEntry(reportEntry);
-                    if (upsertResult.IsSuccess)
-                    {
-                        await _dailyReportRepository.SaveAsync(_context.DailyReport);
-                        await _context.RefreshReportEntriesAsync();
-                        _informationPublisher.Publish(InformationEntry.CreateSuccess("Saved", false, 5));
-                    }
-                    else
-                    {
-                        _informationPublisher.Publish(InformationEntry.CreateInfo(upsertResult.ErrorMessage, false, 5));
-                    }
-                }, () => !_context.SelectedReportEntry.HasErrors);
+                        var upsertResult = _context.DailyReport.UpsertReportEntry(reportEntry);
+                        if (upsertResult.IsSuccess)
+                        {
+                            await _dailyReportRepository.SaveAsync(_context.DailyReport);
+                            await _context.RefreshReportEntriesAsync();
+                            _informationPublisher.Publish(InformationEntry.CreateSuccess("Saved", false, 5));
+                        }
+                        else
+                        {
+                            _informationPublisher.Publish(InformationEntry.CreateInfo(upsertResult.ErrorMessage, false, 5));
+                        }
+                    },
+                    () => !_context.SelectedReportEntry.HasErrors);
             }
         }
 
@@ -114,18 +147,26 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.Views.DayDetails
             IDayEntriesExportViewService sapExportService,
             IReportEntryFactory reportEntryFactory,
             IDailyReportRepository dailyReportRepository,
-            IInformationPublisher informationPublisher)
+            IInformationPublisher informationPublisher,
+            IViewModelDisplayService vmDisplayService)
         {
             _sapExportService = sapExportService;
             _reportEntryFactory = reportEntryFactory;
             _dailyReportRepository = dailyReportRepository;
             _informationPublisher = informationPublisher;
+            _vmDisplayService = vmDisplayService;
         }
 
         public Task InitializeAsync(EditDayViewModel context)
         {
             _context = context;
             return Task.CompletedTask;
+        }
+
+        private void NavigateToDayDetails(int dayOffset)
+        {
+            var tomorrow = _context.DailyReport.Date.AddDays(dayOffset);
+            _vmDisplayService.DisplayAsync<EditDayViewModel>(tomorrow);
         }
     }
 }

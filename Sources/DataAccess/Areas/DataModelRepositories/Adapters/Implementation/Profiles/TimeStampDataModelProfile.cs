@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Mmu.Mlh.LanguageExtensions.Areas.Types.Maybes.Implementation;
 using Mmu.TimeManager.DataAccess.Areas.DataModels;
-using Mmu.TimeManager.Domain.Areas.Models;
+using Mmu.TimeManager.Domain.Areas.Models.Management;
 
 namespace Mmu.TimeManager.DataAccess.Areas.DataModelRepositories.Adapters.Implementation.Profiles
 {

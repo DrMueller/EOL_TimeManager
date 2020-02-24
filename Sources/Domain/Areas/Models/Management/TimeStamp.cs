@@ -4,7 +4,7 @@ using Mmu.Mlh.DomainExtensions.Areas.DomainModeling;
 using Mmu.Mlh.LanguageExtensions.Areas.Invariance;
 using Mmu.Mlh.LanguageExtensions.Areas.Types.Maybes;
 
-namespace Mmu.TimeManager.Domain.Areas.Models
+namespace Mmu.TimeManager.Domain.Areas.Models.Management
 {
     public class TimeStamp : ValueObject<TimeStamp>
     {

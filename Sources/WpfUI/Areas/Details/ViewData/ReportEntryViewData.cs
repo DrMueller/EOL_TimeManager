@@ -2,7 +2,7 @@
 using Mmu.Mlh.WpfCoreExtensions.Areas.Validations.Configuration.Services;
 using Mmu.Mlh.WpfCoreExtensions.Areas.Validations.Rules;
 using Mmu.Mlh.WpfCoreExtensions.Areas.Validations.Validation.Models;
-using Mmu.TimeManager.Domain.Areas.Models;
+using Mmu.TimeManager.Domain.Areas.Models.Management;
 
 namespace Mmu.TimeManager.WpfUI.Areas.Details.ViewData
 {

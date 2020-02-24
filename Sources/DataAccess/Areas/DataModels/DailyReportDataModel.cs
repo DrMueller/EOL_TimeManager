@@ -7,7 +7,6 @@ namespace Mmu.TimeManager.DataAccess.Areas.DataModels
     internal class DailyReportDataModel : AggregateRootDataModel<string>
     {
         public DateTime Date { get; set; }
-
         public List<ReportEntryDataModel> ReportEntries { get; set; }
     }
 }
