@@ -20,7 +20,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.ViewServices.Servants.Implementati
             var sb = new StringBuilder();
 
             sb.Append("Export vom: ");
-            sb.AppendLine(dayExport.DateToExport.ToShortDateString());
+            sb.AppendLine(dayExport.DateToExport.ToString("dddd, dd.MM.yyyy"));
             sb.AppendLine();
 
             dayExport.Entries.ForEach(

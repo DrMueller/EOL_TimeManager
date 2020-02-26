@@ -27,7 +27,6 @@
         </Grid.RowDefinitions>
 
         <DockPanel Style="{StaticResource PanelWithMarginBottom}">
-            <Label Content="{Binding DayDateDescription, Mode=OneWay}" />
             <Button Style="{StaticResource NavigationButton}" Command="{Binding CommandContainer.NavigateToPreviousDay, Mode=OneWay}">
                 <Image Source="/Mmu.TimeManager.WpfUI;component/Infrastructure/Assets/fa-arrow-left.png" />
             </Button>

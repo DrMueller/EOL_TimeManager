@@ -8,8 +8,9 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <DataGrid
+            x:Name="Dg"
             dp:DoubleClickBinding.DoubleClickCommand="{Binding CommandContainer.EditDay}"
-            dp:DoubleClickBinding.DoubleClickParameter="{Binding ElementName=dg, Path=SelectedItem, Mode=OneWay}"
+            dp:DoubleClickBinding.DoubleClickParameter="{Binding ElementName=Dg, Path=SelectedItem, Mode=OneWay}"
             ItemsSource="{Binding OverviewEntries, Mode=OneWay}"
             AutoGenerateColumns="False"
             CanUserAddRows="False"

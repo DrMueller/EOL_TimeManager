@@ -18,8 +18,7 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.Views.DayDetails
         private ReportEntryViewData _selectedReportEntry;
         public CommandContainer CommandContainer { get; }
         public DailyReport DailyReport { get; private set; }
-        public string DayDateDescription => DailyReport.Date.ToShortDateString();
-        public string HeadingDescription { get; } = "Edit day";
+        public string HeadingDescription => DailyReport.Date.ToString("dddd, dd.MM.yyyy");
         public string NavigationDescription { get; } = "Today";
         public int NavigationSequence { get; } = 0;
         public string ReportedTimeDescription => DailyReport.CalculateReportedHours().ToString();
