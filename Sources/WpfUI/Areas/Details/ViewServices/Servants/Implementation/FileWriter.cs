@@ -26,18 +26,19 @@ namespace Mmu.TimeManager.WpfUI.Areas.Details.ViewServices.Servants.Implementati
             dayExport.Entries.ForEach(
                 f =>
                 {
-                    sb.Append(f.TimeDescription.AbsoluteTimeDescription);
+                    sb.Append(f.TimeDescription.RoundedAbsoluteTimeDescription);
                     sb.Append("\t");
-                    //sb.Append(f.TimeDescription.TimeDescriptionInMinutes);
-                    //sb.Append("\t");
+
+                    // sb.Append(f.TimeDescription.TimeDescriptionInMinutes);
+                    // sb.Append("\t");
                     sb.AppendLine(f.DescriptionExternal);
                 });
 
-            sb.Append(dayExport.Overview.TimeDescription.AbsoluteTimeDescription);
+            sb.Append(dayExport.Overview.TimeDescription.RoundedAbsoluteTimeDescription);
             sb.Append("\t");
-            //sb.Append(dayExport.Overview.TimeDescription.TimeDescriptionInMinutes);
-            //sb.Append("\t");
 
+            // sb.Append(dayExport.Overview.TimeDescription.TimeDescriptionInMinutes);
+            // sb.Append("\t");
             var tempFileName = _fileSystem.Path.GetTempFileName();
             _fileSystem.File.WriteAllText(tempFileName, sb.ToString());
             Process.Start("notepad.exe", tempFileName);

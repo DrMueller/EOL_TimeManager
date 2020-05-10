@@ -7,23 +7,26 @@ namespace Mmu.TimeManager.Domain.Areas.Models.Export
     {
         private readonly TimeSpan _timeSpan;
 
-        public string AbsoluteTimeDescription
+        public string RoundedAbsoluteTimeDescription
         {
             get
             {
-                var absoluteTime = Math.Round(_timeSpan.TotalHours, 2).ToString(CultureInfo.InvariantCulture);
+                var roundedTime = Math.Round(_timeSpan.TotalHours, 2);
+                var surplusMinutes = Math.Round(roundedTime % 0.25, 2);
+
+                if (Math.Abs(surplusMinutes) > 0)
+                {
+                    roundedTime -= surplusMinutes;
+                    roundedTime += 0.25;
+                }
+
+                var absoluteTime = roundedTime.ToString(CultureInfo.InvariantCulture);
 
                 return absoluteTime;
             }
         }
 
-        public string TimeDescriptionInMinutes
-        {
-            get
-            {
-                return _timeSpan.ToString(@"hh\:mm");
-            }
-        }
+        public string TimeDescriptionInMinutes => _timeSpan.ToString(@"hh\:mm");
 
         public TimeDescription(TimeSpan timeSpan)
         {
